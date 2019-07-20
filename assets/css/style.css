@@ -1,0 +1,16 @@
+*{
+    font-family: 'Permanent Marker';
+}
+
+/* backgorund for the div contianing the cards */
+body {
+    background-color: #003A70;
+}
+.cardHolder {
+    background-color: #FFCB05;
+    border-style: ridge;
+    border-color: #3D7DCA;
+    border-width: 10px;
+    width: 500px;
+    margin: 0 auto;
+}
