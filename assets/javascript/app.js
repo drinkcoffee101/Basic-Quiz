@@ -1,5 +1,13 @@
 
-
+//
+//
+//
+//     When the game resets the 1st correct answer doesn't load
+//
+//
+//
+//
+//
 
 
 $(document).ready(function(){
@@ -39,6 +47,11 @@ let answerNumber = 0;
 
 //will be drwan from for the radio button values
 let chooseFrom = [];
+
+//  Variable that will hold our setInterval that runs the stopwatch
+let intervalId;
+
+let time = 60;
 
 
 /*=============================================
@@ -121,6 +134,8 @@ function createCard() {
 
 //display number of correct answers
 function endGameDisplay() {
+    stopTimer();
+
     $('#quizArea').empty();
 
     //create new header tag 
@@ -132,52 +147,85 @@ function endGameDisplay() {
 
     $('#quizArea').append(correctScore);
 
-    //change the text of the button to say try again 
-    $('button').text("Try Again");
+    $('#enter').hide();
+    $('#start').show();
 }
+
+function startTimer(){
+    intervalId = setInterval(countTimer, 1000);
+}
+
+function stopTimer(){
+    clearInterval(intervalId);
+}
+
+function countTimer(){
+    time--;
+    $('#time').text(time);
+
+    if(time === 0){
+        endGameDisplay();
+    }
+}
+
+function userGuess(){
+    //store the user guess 
+    let userGuess = $('input[name="name"]:checked').val();
+    //check if the user guess is in the answers array
+    if(answers.indexOf(userGuess) != -1){
+        rightAnswer++;
+    }
+    else{
+        wrongAnswer++;
+    }
+}
+
+
 
 /*=============================================
 =            Game initialization            =
 =============================================*/
+//hide the submit button
+$("#enter").hide();
+//start game button 
+$("#start").click(function(){
+
+
+rightAnswer = 0;
+wrongAnswer = 0;
+questionNumber = 0;
+answerNumber = 0;
+time = 60;
+$('#time').text("60");
+
+
+
 
 //generate array of answers;
 radioAnswers();
 //generate the 1st card
 createCard();
 
+startTimer();
+
+$("#enter").show();
+$('#start').hide();
+
+});
 
 /*=============================================
 =            Submit button functionality      =
 =============================================*/
-    
+
     $("#enter").click(function () { 
         
         if(questionNumber < 10){
-            //store the user guess 
-            let userGuess = $('input[name="name"]:checked').val();
-            //check if the user guess is in the answers array
-            if(answers.indexOf(userGuess) != -1){
-                rightAnswer++;
-            }
-            else{
-                wrongAnswer++;
-            }
+            userGuess();
             createCard();
-            console.log(questionNumber);
         }
-        else if(questionNumber === 10){
-            //clear the display
-            //dislay number of correct
+        else if (questionNumber === 10){
+            userGuess();
             endGameDisplay();
-            questionNumber++;
-        }
-        else{
-            questionNumber = 0;
-            answerNumber = 0;
-            radioAnswers();
-            createCard();
-
-            $('button').text("Next Question");
         }
     });
 });
