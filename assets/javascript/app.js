@@ -51,7 +51,7 @@ let chooseFrom = [];
 //  Variable that will hold our setInterval that runs the stopwatch
 let intervalId;
 
-let time = 60;
+let time = 20;
 
 
 /*=============================================
@@ -164,7 +164,11 @@ function countTimer(){
     $('#time').text(time);
 
     if(time === 0){
-        endGameDisplay();
+        // endGameDisplay();
+        userGuess();
+        createCard();
+        time = 20;
+        $('#time').text("20");
     }
 }
 
@@ -182,6 +186,7 @@ function userGuess(){
 
 
 
+
 /*=============================================
 =            Game initialization            =
 =============================================*/
@@ -195,8 +200,8 @@ rightAnswer = 0;
 wrongAnswer = 0;
 questionNumber = 0;
 answerNumber = 0;
-time = 60;
-$('#time').text("60");
+time = 20;
+$('#time').text("20");
 
 
 
@@ -218,7 +223,10 @@ $('#start').hide();
 =============================================*/
 
     $("#enter").click(function () { 
-        
+
+        time = 20;
+        $('#time').text("20");
+
         if(questionNumber < 10){
             userGuess();
             createCard();
