@@ -51,6 +51,7 @@ let chooseFrom = [];
 //  Variable that will hold our setInterval that runs the stopwatch
 let intervalId;
 
+//default amount of time in seconds 
 let time = 20;
 
 
@@ -59,7 +60,7 @@ let time = 20;
 =============================================*/
 
 //pulled from => https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
-//will shuffle the chooseFrom array so the answer isn't always 1st
+//will shuffle the chooseFrom array so the correct answer isn't always 1st
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -79,8 +80,6 @@ function radioAnswers(){
         }
         //shuffle the array
         shuffle(chooseFrom);
-        //choose the next answer when called again 
-        // answerNumber++;
   };
 
 //this function creates a new card with a an image and set of new possible answers from the pokeImages and pokemonUncapped arrays
@@ -104,7 +103,7 @@ function createCard() {
     $(div1).append(image);
     $(div1).append(div2);
 
-    //create the radio divs fpr the 
+    //create the radio divs for the answers 
     for (let i = 0; i < 4; i++) {
         let value = "pokeName"+(i+1);
 
@@ -164,7 +163,6 @@ function countTimer(){
     $('#time').text(time);
 
     if(time === 0){
-        // endGameDisplay();
         userGuess();
         createCard();
         time = 20;
